@@ -27,7 +27,7 @@ type application struct {
 func main() {
 	dsn := flag.String("dsn", "web:.lynxone84@tcp(localhost:3306)/snippetbox?parseTime=true", "MySQL data source name")
 	addr := flag.String("addr", ":4000", "HTTP network address")
-	secret := flag.String("secret", "s6Ndh+pPbnzHbS*+9Pk8qGWhTzbpa@ge", "Secret key")
+	secret := flag.String("secret", "p6Ndh+pPbnzJbS*+9Pk8qGWhTzbpa@ge", "Secret key")
 	flag.Parse()
 
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
@@ -48,6 +48,7 @@ func main() {
 	session := sessions.New([]byte(*secret))
 	session.Lifetime = 12 * time.Hour
 	session.Secure = true
+	session.SameSite = http.SameSiteStrictMode
 
 	app := &application{
 		errorLog:      errorLog,
